@@ -1,0 +1,17 @@
+<script>
+  const KEY = 'projectId'
+  let params = new URLSearchParams(location.search)
+  let entries = Object.fromEntries(params)
+  let redirectUrl
+  if (entries[KEY] == undefined) {
+    redirectUrl = `https://script.google.com/macros/d/${localStorage.getItem(KEY)}/usercallback${location.search}`
+    localStorage.removeItem(KEY)
+  } else {
+    localStorage.setItem(KEY, entries.projectId)
+    params.delete(KEY)
+    redirectUrl = entries.baseurl
+    params.delete('baseurl')
+    redirectUrl += '?' + params.toString()
+  }
+  window.open(redirectUrl, "_self")
+</script>
